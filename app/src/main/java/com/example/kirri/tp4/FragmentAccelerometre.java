@@ -34,6 +34,7 @@ public class FragmentAccelerometre extends android.app.Fragment implements Senso
     public Sensor sensorAccelerometre;
 
     public MediaPlayer media = new MediaPlayer();
+    long curTime = System.currentTimeMillis();
 
 
     @Override
@@ -59,8 +60,8 @@ public class FragmentAccelerometre extends android.app.Fragment implements Senso
         y = getActivity().findViewById(R.id.Y);
         z = getActivity().findViewById(R.id.Z);
 
-        media.start();
 
+        media.start();
 
         sensorManager.registerListener(this,sensorAccelerometre,sensorManager.SENSOR_DELAY_NORMAL);
 
@@ -71,6 +72,7 @@ public class FragmentAccelerometre extends android.app.Fragment implements Senso
     public void onDetach(){
         super.onDetach();
         sensorManager.unregisterListener(this, sensorAccelerometre);
+        media.release();
     }
 
 
