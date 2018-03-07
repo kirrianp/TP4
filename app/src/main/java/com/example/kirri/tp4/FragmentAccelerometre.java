@@ -7,7 +7,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import org.w3c.dom.Text;
+import android.widget.MediaController;
 
 import static android.content.Context.SENSOR_SERVICE;
 
@@ -30,14 +33,17 @@ public class FragmentAccelerometre extends android.app.Fragment implements Senso
     public SensorManager sensorManager;
     public Sensor sensorAccelerometre;
 
-
-
-
+    public MediaPlayer media = new MediaPlayer();
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            media = MediaPlayer.create(getContext(),R.raw.lightsabre);
+        }
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_accelerometre, container, false);
 
@@ -53,8 +59,10 @@ public class FragmentAccelerometre extends android.app.Fragment implements Senso
         y = getActivity().findViewById(R.id.Y);
         z = getActivity().findViewById(R.id.Z);
 
-        sensorManager.registerListener(this,sensorAccelerometre,sensorManager.SENSOR_DELAY_NORMAL);
+        media.start();
 
+
+        sensorManager.registerListener(this,sensorAccelerometre,sensorManager.SENSOR_DELAY_NORMAL);
 
 
     }
